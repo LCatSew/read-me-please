@@ -1,6 +1,4 @@
-// TODO: Include packages needed for this application
 const inquirer = require('inquirer');
-//const fs = require('fs');
 
 
 const generateMarkdown = require('./utils/generateMarkdown.js');
@@ -8,7 +6,6 @@ const { writeFile } = require('fs').promises;
 
 console.log(generateMarkdown);
 
-// TODO: Create an array of questions for user input
 const promptUser = () => {
     return inquirer.prompt([
         {
@@ -99,11 +96,32 @@ const promptUser = () => {
             name: 'ruBadge',
             when: (answers) => answers.ruLicense,
         },
+        {
+            type: 'confirm',
+            message: 'Are any tests required?',
+            name: 'ruTests',
+        },
+        {
+            type: 'input',
+            message: 'Input the reuired tests',
+            name: 'tests',
+            when: (answers) => answers.ruTests, 
+        },
+        {
+            type: 'input',
+            message: 'What is your Github username?',
+            name: 'github'
+        },
+        {
+            type: 'input',
+            message: 'Please input your email address',
+            name: 'email',
+        }
     ])
 };
 
 
-// TODO: Create a function to initialize app and write README.md file
+//initialize app and write README.md file
 const init = () => {
     promptUser()
     .then((answers) => writeFile('README.md', generateMarkdown(answers)))
